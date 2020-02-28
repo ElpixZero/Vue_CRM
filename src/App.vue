@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <component :is="layout">
-      <router-view />
-    </component>
+    <component :is="layout" />
   </div>
 </template>
 
@@ -13,7 +11,6 @@ import MainLayout from "./layouts/Main.layout.vue";
 export default {
   computed: {
     layout() {
-      console.log(this.$route.meta);
       return (this.$route.meta.layout || "empty") + "-layout";
     }
   },
