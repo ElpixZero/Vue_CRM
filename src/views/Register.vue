@@ -15,9 +15,8 @@
         <small
           v-if="$v.email.$dirty && !$v.email.required"
           class="helper-text invalid"
+          >Введите Ваш email</small
         >
-          Введите Ваш email
-        </small>
         <small
           v-else-if="$v.email.$dirty && !$v.email.email"
           class="helper-text invalid"
@@ -44,9 +43,9 @@
         <small
           class="helper-text invalid"
           v-else-if="$v.password.$dirty && !$v.password.minLength"
+          >Длина пароля минимум
+          {{ $v.password.$params.minLength.min }} символов</small
         >
-          Длина пароля минимум {{ $v.password.$params.minLength.min }} символов
-        </small>
       </div>
       <div class="input-field">
         <input
@@ -61,9 +60,8 @@
         <small
           class="helper-text invalid"
           v-if="$v.name.$dirty && !$v.name.required"
+          >Введите Ваше имя</small
         >
-          Введите Ваше имя
-        </small>
       </div>
       <p>
         <label>
@@ -110,7 +108,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.$v.$invalid) {
         return this.$v.$touch();
       }
@@ -121,9 +119,11 @@ export default {
         password: this.password
       };
 
-      console.log(formData);
-
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch("register", formData);
+        this.$router.push("/");
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
     }
   }
 };

@@ -47,8 +47,13 @@ export default {
     dropdown: null
   }),
   methods: {
-    logOut() {
-      this.$router.push("/login?message=logout");
+    async logOut() {
+      try {
+        await this.$store.dispatch("logout");
+        this.$router.push("/login?message=logout");
+      } catch (e) {
+        alert("in proccesing logout", e);
+      }
     }
   },
   mounted() {
